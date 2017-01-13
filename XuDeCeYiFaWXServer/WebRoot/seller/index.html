@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>测壹发后台管理系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="测壹发">
+<meta charset="UTF-8">
+<meta name="description"
+	content="测壹发">
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/sellerbase.css" rel="stylesheet">
+</head>
+<body ng-app="sellerApp" ng-controller="sellerCtrl">
+	<!-- 顶部 -->
+	<nav class="navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#example-navbar-collapse">
+					<span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">测壹发后台管理系统</a>
+			</div>
+			<div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<!-- <li><a href="#">立即注册</a></li>
+					<li><a href="#">登录</a></li> -->
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!-- end顶部 -->
+	<!-- 巨幕 -->
+	<div class="jumbotron mock-img-jumbotron">
+  		<div class="container seller-formdiv ">
+  			<!-- sellerLogin -->
+			<form  id="sellerLoginForm">
+			<div class="form-group text-center">
+			<label id="sellerErrorValue" class="text-danger"></label>
+			</div>
+				<div class="form-group">
+					 <input
+						type="tel" class="form-control" id="sellerPhone" ng-model="sellerPhone"
+						placeholder="手机">
+				</div>
+				<div class="form-group">
+					 <input
+						type="password" class="form-control" id="sellerPassword" ng-model="sellerPassword"
+						placeholder="密码">
+				</div>
+				<div class="form-group">
+				<button type="button" class="btn btn-success btn-block" id="sellerSubmit" ng-click="sellerSubmit()">登录</button>
+				</div>				
+				<div class="form-group">
+				<!-- <a href="/seller/seller_register">立即注册，免费开店&gt;</a>
+				<a class="pull-right">忘记密码？找回密码</a> -->
+				</div>				
+			</form>
+  			<!-- end sellerLogin -->
+  			<!-- sellerLogining -->
+  			<form class="col-xs-offset-6 col-xs-6" style="display:none;" id="sellerLogining"> 
+			<div class="form-group text-center">
+			<label id="sellerErrorValue" class="text-danger hidden"></label>
+			</div>
+				<div class="form-group text-center img-circle">
+					 <img id="sellerImgSrc" class="img-circle" style="width:100px;height:100px;" src="/resources/img/preLoding.jpg"/>
+				</div>
+				<div class="form-group">
+				<div class="text-center alert alert-success" id="sellerNiceName">这个商家很懒，还没名字~……~</div>
+				</div>
+				
+				<div class="form-group">
+				<button type="button"  class="button button-small button-raised button-caution" id="sellerAutoLogin">进入后台</button>
+				<button type="button" class="button button-small button-raised button-royal pull-right" id="sellerAutoLoginOut">退出登录</button>
+				</div>				
+			</form>
+  			<!-- end sellerLogining -->
+		</div>
+	</div>
+	<!-- end巨幕 -->
+
+<!-- foot -->
+  <div class="container-fuild seller-foot">
+ 	<div class="seller-foot-contact">
+ 		<div>联系我们</div>
+ 		<div>公司地址：湖南省长沙市岳麓区阳光城东座910室</div>
+ 	</div>
+  <div class="seller-foot-copyright"><p>Copyright 2016 itcast Inc,All rights reserved.</p></div>
+  </div>
+<!-- endfoot -->
+
+	<script src="/resources/js/jquery2.1.js"></script>
+	<script src="/resources/js/bootstrap3.2.0.js"></script>
+	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
+	<script src="/resources/js/base.js"></script>
+	<script src="/resources/js/seller.js"></script>
+	<script>
+	angular.module('sellerApp',[])
+	.config(function($httpProvider){
+		$httpProvider.defaults.transformRequest=function(obj){
+			var str=[];
+			for ( var p in obj) {
+				str.push(encodeURIComponent(p)+"="+encodeURIComponent(obj[p]))
+			}
+			return str.join("&");
+		}
+		$httpProvider.defaults.headers.post={
+			'Content-Type':'application/x-www-form-urlencoded'
+		}
+	})
+	.controller('sellerCtrl',function($scope,$http){
+		$scope.sellerSubmit=function(){
+			$http.post("/admin/login",{adminName:$scope.sellerPhone,password:$scope.sellerPassword})
+			.success(function(data,status,headers,config){
+				if(data!=null&&typeof data =='object'){
+				console.log(data.manager_id);
+					myUtils.myLoadingToast("登录成功", function(){
+					location.replace("/seller/main");
+						
+					});
+				}else{
+					myUtils.myLoadingToast("登录失败", function(){
+					});
+				}
+				//console.log(status);
+				//console.log(headers);
+				//console.log(config);
+			}).error(function(data,status,headers,config){
+				console.log(data);
+				console.log(status);
+				console.log(headers);
+				console.log(config);
+				myUtils.myLoadingToast("登录失败", function(){
+					});
+			});
+		}
+	});
+	</script>
+</body>
+</html>

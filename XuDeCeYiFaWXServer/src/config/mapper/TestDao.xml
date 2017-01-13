@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.TestDao">
+<!-- 添加测试 -->
+<insert id="addTest" parameterType="Test" keyProperty="testId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  test_tb 
+   		 (
+   		 title,
+   		 type,
+   		 level,
+   		 img,
+   		 update_date
+   		 )
+   VALUES
+    	 (#{title},
+    	 #{type},
+    	 #{level},
+    	 #{img},
+    	 #{updateDate})
+</insert>  
+<!-- 更新测试 -->
+<update id="updateTest" parameterType="Test" >  
+    UPDATE 
+    	test_tb 
+    SET 
+    	title=#{title},
+    	type=#{type},
+    	level=#{level},
+    	img=#{img},
+    	update_date=#{updateDate}
+    WHERE
+    	 test_id=#{testId} 
+</update> 
+<!-- 删除测试-->
+<delete id="delTest"  parameterType="Integer" >  
+    DELETE FROM
+    	 test_tb 
+    	 WHERE test_id=#{testId}
+</delete>  
+<!-- 加载测试-->
+<select id="loadTest" parameterType="Integer" resultType="Test" >
+SELECT 
+		 test_id,
+	 	 title,
+   		 type,
+   		 level,
+   		 img,
+   		 update_date
+FROM test_tb 
+WHERE test_id=#{testId}
+</select>
+<!-- 分页查询测试-->
+<select id="browsePagingTest" resultType="Test">  
+    SELECT
+	     test_id,
+	 	 title,
+   		 type,
+   		 level,
+   		 img,
+   		 update_date
+	FROM test_tb
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageNum},#{pageSize}
+</select> 
+<!-- 查询全部测试-->
+<select id="browseAllTest" resultType="Test">  
+    SELECT
+	     test_id,
+	 	 title,
+   		 type,
+   		 level,
+   		 img,
+   		 update_date
+	FROM test_tb
+	ORDER BY
+		${orderName}  ${orderWay}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(test_id)
+	FROM test_tb
+</select>   
+   
+ 
+</mapper>

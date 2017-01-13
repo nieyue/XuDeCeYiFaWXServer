@@ -1,0 +1,35 @@
+    <label  class="text-danger" style="font-size:30px;color:#ccc;">添加一套测试</label>
+<!-- 增加测试 -->
+	<form>
+    <label  class="text-danger">※测试名称</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="test.title"  placeholder="输入测试标题">
+  </div>
+    <label  class="text-danger">※测试类型</label>
+  <div class="comment-input-margin ">
+   <select class=" comment-input" ng-model="test.type" ng-init="test.type='爱情测试'" ng-options="x for x in ['爱情测试','星座测试','社交测试','性格测试','财运测试','职场测试']">
+</select>
+  </div>
+    <label  class="text-danger">*等级（1为最高级，首页置顶顶部1个，2次之，首页6个不同类型，10为正常值）</label>
+  <div class="comment-input-margin ">
+    <select class=" comment-input" ng-model="test.level" ng-init="test.level=10" ng-options="x for x in [10,2,1]">
+</select>
+  </div>
+   <label  class="text-danger">※图片url</label>
+  <div class="comment-input-margin">
+    <input type="file" class="comment-input" ng-change="testFileUpload(this)" name="testFileUpload">
+  <div>
+  <img style="width:300px;height: 50px;" ng-src="test.img||''"/></div>
+  </div>
+  <hr/>
+  <label  class="text-danger" style="font-size:30px;color:#ccc;">添加一个或多个问题与答案</label>
+  <br/>
+  <label  class="text-danger">※问题名称</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input"  placeholder="输入问题名称">
+  </div>
+  
+  
+  <button type="button" class="btn btn-lg btn-danger" ng-click="addTestForm()">保存发布</button>
+</form>
+<!-- 增加测试 end-->

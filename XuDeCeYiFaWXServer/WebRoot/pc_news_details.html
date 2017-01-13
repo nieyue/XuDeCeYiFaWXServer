@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>详情</title>
+<meta name="keywords" content="禄宏湖南微交易">
+<meta charset="UTF-8">
+<meta name="description" content="禄宏湖南微交易">
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<style>
+tr,td{
+width:100%;
+border:1px solid #ccc;
+}
+</style>
+<link href="/resources/css/base.css" rel="stylesheet">
+
+</head>
+
+<body ng-app="detailsApp" style="width:1480px !important;position: relative;left:0;top:0;" >
+	<img class="advertiseImg" style="width:380px;height:666px;position: absolute;left:20px;top:50px;border:1px solid red;" src="/resources/img/gzh.jpg"/>
+	<img class="advertiseImg" style="width:380px;height:666px;position: absolute;left:1080px;top:50px;border:1px solid red;" src="/resources/img/gzh.jpg"/>
+	<div ng-controller="detailsCtrl" style="width:640px;position:absolute;top:0;left:420px;" >
+	<!-- 标志 -->
+		<!-- <div class="comment-top-fixed comment-title-top">
+		<a class="comment-title-left" href="javascript:location.href='/index?type='+myUtils.GetQueryString('type')">&lt;返回</a>
+		<span class="comment-title-center">
+		<span class="glyphicon glyphicon-usd" style="top:4px;"></span>
+		禄宏湖南微交易
+		</span>
+		</div> -->
+	<!-- 标志end -->
+		<!-- 新闻列表 -->
+		<div style="margin-bottom:20px" id="newsDeatilsBody" >
+		<div class="list-group media comment-list-item">
+			<div class="media-center">
+				<div ><h3 ng-bind="news.title"></h3></div>
+				<div class="text-muted">
+					<span ng-bind="news.time"></span>
+					<!-- <span ng-bind="news.type"></span> -->
+				</div>
+				<span ng-bind-html="html"></span>
+				 <div ng-bind-html="news.content" id="newsDetails">
+				</div> 
+		
+			</div>
+		</div>
+		</div>
+		<!-- 新闻列表end -->
+		<!-- 热门-->
+		<!-- <div class="list-group media comment-list-item" style="margin-top:50px;">
+			<div class="media-center">
+				<div class="comment-hot-title">
+					<span class="comment-hot-icon"></span>
+					<span class="comment-hot-word">热门</span>
+					<span class="comment-hot-line"></span>
+				</div>
+				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
+					<div class="media-left">
+						<a href="#"> <img class="media-object  comment-list-item-img"
+					ng-src="{{fixedRecommendNews.img_address||newsInit.img_address}}" >
+						</a>
+					</div>
+					<div class="media-body comment-right-body">
+						<div class="media-heading" ></div>
+						<div class="pull-left">
+						<div class="comment-right-body-title"><span ng-bind="fixedRecommendNews.title||newsInit.title"></span></div>
+						<div class="text-muted"><span ng-bind="fixedRecommendNews.time||newsInit.time"></span><span class="newsType" ng-bind="fixedRecommendNews.type||newsInit.type"></span></div>
+					</div>
+					</div>
+				</div>
+				</div>
+				</div> -->
+		<!-- 热门end -->
+		
+		<!-- 推荐 -->
+	<!-- 	<div class="list-group media comment-list-item">
+			<div class="media-center">
+				<div class="comment-hot-title">
+					<span class="comment-hot-icon"></span>
+					<span class="comment-hot-word">推荐</span>
+					<span class="comment-hot-line"></span>
+				</div>
+				
+		随机推荐
+				 <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="isRecommendNews in isRecommendList" ng-click="newsDetails(isRecommendNews.type,isRecommendNews.news_id)">
+					<div class="media-left">
+						<a href="#"> <img class="media-object  comment-list-item-img"
+					ng-src="{{hisRecommendNews.img_address||newsInit.img_address}}" >
+						</a>
+					</div>
+					<div class="media-body comment-right-body">
+						<div class="media-heading" ></div>
+						<div class="pull-left">
+						<div class="comment-right-body-title"><span ng-bind="isRecommendNews.title||newsInit.title"></span></div>
+						<div class="text-muted"><span ng-bind="isRecommendNews.time||newsInit.time"></span><span class="newsType" ng-bind="isRecommendNews.type||newsInit.type"></span></div>
+					</div>
+					</div>
+				</div> 
+		随机推荐end
+		
+			</div>
+		</div> -->
+		<!-- 推荐end -->
+		
+		
+		<!-- 底部end -->
+		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
+		<!--  底部end -->
+		
+		</div>
+		<!-- cnzz -->
+		<div style="display:none;">
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260157684'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260157684' type='text/javascript'%3E%3C/script%3E"));</script>
+				</div>
+		
+	<script src="/resources/js/jquery2.1.js"></script>
+	<script src="/resources/js/bootstrap3.2.0.js"></script>
+	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="/resources/js/base.js"></script>
+
+	<script>
+
+	$(function(){
+		
+		//重置详情页所有图片
+		/* $("img").each(function(){
+			if($(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="gif"
+					&&$(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="ico"
+					){
+	  		$(this).css({'width':'100%'});
+			}else{
+				$(this).css({'max-width':'100%'});
+			}
+	  	}); */
+		//修改热门推荐图片大小
+	  	$(".comment-list-item-img").each(function(){
+	  		$(this).css({'width':'100px','height':'76px'});
+	  	});
+		//去掉内容跳转 
+	  	$("#newsDetails a").each(function(){
+	  	var $this=$(this);
+	  	var thissrc=$this.attr("href");
+	  	$(this).attr("href","#");
+	  	 $this.click(function(event){
+	  		 if(thissrc.indexOf("http://xw.qq.com/")>-1){
+				return false;	  			 
+	  		 }
+	  		$("#detailsShow").show();
+	  		$("#i").attr("src",thissrc);
+	  		return false;
+	  	}); 
+	  	});
+		$("#detailsHide").click(function(){
+			$("#detailsShow").hide();
+		});
+	  	//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+	  	//新增下一页
+	  	/* var list="p";
+		if(($("p").length<=0) && ($("li").length>0)){
+			list="li";
+			}
+			$("#newsDetails").after(
+					"<a  class='btn btn-success pull-right' id='page-box'>下一页</a>")
+		var prePageNum=0;
+		var nextPageNum=10;
+		//重置p
+		function showPage(prePageNum,nextPageNum){
+		$(list).each(function(index){
+		$(this).css("text-indent","0");
+		$(this).hide();
+		if(index<nextPageNum && index>=prePageNum){
+			$(this).show();
+		}
+		});
+		}
+		showPage(prePageNum,nextPageNum);
+	  	$("#page-box").on("click",function(d){
+	  		prePageNum+=10;
+	  		nextPageNum+=10;
+	  		if($(list).length<prePageNum){
+	  			$("#page-box").after("<div class='text-center text-info'>没有更多了</div>");
+	  			$("#page-box").remove();
+	  			return ;
+	  		}
+	  		showPage(prePageNum,nextPageNum);
+	  		if(location.href.indexOf("#newsDeatilsBody")>-1){
+	  		location.href=location.href;
+	  		}else{
+	  		location.href=location.href+"#newsDeatilsBody";
+	  		}
+	  	}); */
+	});
+    	var detailsApp=angular.module('detailsApp',[]);
+    	detailsApp.controller('detailsCtrl',function($scope,$sce){
+    		//监听广告位置
+    		//$(".advertiseImg").
+    		var advertiseImgTop=$(".advertiseImg").css("top");
+    		$(document).scroll(function(){
+    			$(".advertiseImg").css("top", parseInt($(document).scrollTop())+50+"px");
+    		});
+    		function initData(id,fixedRecommendSize,isRecommendSize){
+    			$.ajax({  
+  		          type : "get",  
+  		          url : "/news/"+id,  
+  		          async : false,  
+  		          success : function(data){
+  		        	console.log(data);
+  		        	data.content=$sce.trustAsHtml(data.content);
+    				$scope.news=data;
+  		        	//$scope.news.content=$sce.trustAsHtml($scope.news.content);
+    				//热门置顶
+  		        	$.ajax({  
+      		          type : "get",  
+      		          url : "/news/list/random/fixedRecommend?pageSize="+fixedRecommendSize+"",  
+      		          async : false,  
+      		          success : function(data){
+      		        	  $scope.fixedRecommendList=data; 
+      		        	  myUtils.myPrevToast("加载完成", null, "remove");
+      		          }  
+      		          }); 
+    				//推荐
+    				$.ajax({  
+      		          type : "get",  
+      		          url : "/news/list/random/isRecommend?pageSize="+isRecommendSize+"",  
+      		          async : false,  
+      		          success : function(data){
+      		        	  $scope.isRecommendList=data; 
+      		        	  myUtils.myPrevToast("加载完成", null, "remove");
+      		          }  
+      		          });   
+  		         
+  		          }  
+  		          });  
+    			
+    			
+    		}
+    		initData(myUtils.GetQueryString("news_id"),3,5);
+    		//新闻初始化
+    		$scope.newsInit={
+    				news_id:6160,
+    				img_address:'http://t.kejixun.com/uploadfile/2016/0804/20160804024053197.jpg',
+        			title:'手机支付流行，小偷开始猖獗',
+        			type:'奇闻',
+        			time:'2016-08-04 14:40:53',
+        			content:">· 对商家而言，很难判别顾客究竟是遗漏扫码，还是不会扫码；</p>"
+        				+" <p>· 数据显示，采用自助扫码技术的商家，失窃率比同业平均水平高出122%；</p>"
+        				  +"<p>· 商家频繁地捉到小偷，并且小偷会承认犯罪。</p>"
+        				  +"<p>Hopkins表示：“许多商家开始认识到了这些问题，开始采取措施来提醒相关风险，并确保购物篮中所有商品都被扫码且打印在收据上。”</p>"
+        				  +" <p>“零售业的所有创新都是商业选择——处于购买体验更愉悦与商家利润更丰厚的考量。但同时也可能带来一些消极结果，例如失窃率增加。”</p>"
+        				  +"<p>该研究显示，商家的一些选择或许会招致一些出乎预料的行为和结果。</p> "
+        				 +"</div></div>"
+        			};
+    		
+    	});
+    	
+    	
+    </script>   
+</body>
+</html>
