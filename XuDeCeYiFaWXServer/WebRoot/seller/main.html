@@ -359,61 +359,144 @@
             	'rightbody@main': {
                     templateUrl: "/seller/templates/news_add.html",
                     controller:function($scope){
-                    	$scope.answerList=[];
-                    	$scope.problemList=[];
                     	$scope.test={
                     		 test_id:'',
                     		 title:'',
-                    		 type:'',
-                    		 level:'',
+                    		 type:'爱情测试',
+                    		 level:'10',
                     		 img:'',
                     		 update_date:'',
+                    		 problemList:[
+                    		           {
+                    		        	   problem_id:'',
+                    		        	   name:'',
+                    		        	   type:'',
+                    		        	   img:'',
+                    		        	   order_number:'',
+                    		        	   update_date:'',
+                    		        	   answerList:[
+                    		        	               {
+                    		        	            	   answer_id:'',  
+                    		        	            	   name:'',  
+                    		        	            	   type:'',  
+                    		        	            	   img:'',  
+                    		        	            	   result:'',  
+                    		        	            	   update_date:''  
+                    		        	               }]
+                    		        	   
+                    		           }]                    		 
+                    	};
+                    	
+                    	//问题数目改变
+                    	$scope.problemListChange=function(problemNumber){
+                    		$scope.test.problemList=[];
+                    		console.log(problemNumber)
+                    		for (var i = 0; i < problemNumber; i++) {
+                    			$scope.test.problemList.push({
+                    			   problem_id:'',
+             		        	   name:'',
+             		        	   type:'',
+             		        	   img:'',
+             		        	   order_number:'',
+             		        	   update_date:'',
+             		        	  answerList:[
+           		        	               {
+           		        	            	   answer_id:'',  
+           		        	            	   name:'',  
+           		        	            	   type:'',  
+           		        	            	   img:'',  
+           		        	            	   result:'',  
+           		        	            	   update_date:''  
+           		        	               }]
+	        	               });
+    							}
+                    	};
+                    	//答案数目改变
+                    	$scope.answerListChange=function(problem,answerNumber){
+                    		for (var i = 0; i < $scope.test.problemList.length; i++) {
+                    			//选择得当前问题
+                    			if($scope.test.problemList[i]==problem){
+                    			$scope.test.problemList[i].answerList=[];
+                    			console.log(problem)
+                    			console.log(answerNumber)
+                    			for (var j = 0; j < answerNumber; j++) {
+                    			console.log($scope.test.problemList[i].answerList)
+                    			$scope.test.problemList[i].answerList.push({
+                    				   answer_id:'',  
+		        	            	   name:'',  
+		        	            	   type:'',  
+		        	            	   img:'',  
+		        	            	   result:'',  
+		        	            	   update_date:'',  
+	        	               });
+								}
+                    			}
+    						}
                     	};
                     	//上传测试图片
-                 		$scope.testFileUpload=function(_this){
+                 		$("#testFileUpload").change(function(){
+                    		//console.log($("#testFileUpload"))
+                 		//function testFileUpload(){
                  			myUtils.fileUpload(
-                 				    {inputfile:$(_this),
+                 				    {inputfile:$("#testFileUpload"),
                  				    ajaxObj:{
                  				        formData:[
-                 				            {key:"testFileUpload",value:$(_this).get(0).files[0]}
+                 				            {key:"testFileUpload",value:$("#testFileUpload").get(0).files[0]}
                  				            ],
                  				        url:"/test/img/add",
                  				        success:(data)=>{
                  				            if(data){
                  				            myUtils.myLoadingToast("上传成功",null);
+                 				            myUtils.myPrevToast("上传成功",null,"remove");
                  				           $scope.test.img=data;
+                 				           $scope.$apply();
                  				            }
                  				        }
-                 				    
                  				    }
                  				}
                  				);
-                 		};
+                 		});
                      	    //提交表单
                     	$scope.addTestForm=function(){
-                    		var title=$scope.addNewsTitle;
-                    		var type=$scope.addNewsType;
-                    		var fixedRecommend=$scope.fixedRecommend;
-                    		var isRecommend=$scope.isRecommend;
-                    		var content=ue.getContent();
-              		        	  console.log(content)
+                     	    	console.log(angular.toJson($scope.test));
+                     	    	//return;
                     		myUtils.myPrevToast("添加中", function(){
                     		$.ajax({  
+              		          url : "/test/add/all",  
               		          type : "post",  
-              		          url : "/news/add",  
-              		          data:{"title":title,"type":type,
-              		        	  "fixedRecommend":fixedRecommend,
-              		        	  "isRecommend":isRecommend,
-              		        	  "content":content},
-              		          async : true,  
+              		         // contentType:"application/json",
+              		          data:{testDTO:angular.toJson($scope.test)},
+              		         // async : true,  
               		          success : function(data){
               		        	if(data.code==200){
-              		        	$scope.addNewsTitle="";
-              		        	$scope.addNewsType="";
-              		        	$scope.fixedRecommend="0";//默认置顶否
-                     			$scope.isRecommend="0";//默认推荐否
-              		        	$scope.$apply();
-              		        	ue.setContent("");
+              		        		$scope.test={
+              	                    		 test_id:'',
+              	                    		 title:'',
+              	                    		 type:'爱情测试',
+              	                    		 level:'10',
+              	                    		 img:'',
+              	                    		 update_date:'',
+              	                    		 problemList:[
+              	                    		           {
+              	                    		        	   problem_id:'',
+              	                    		        	   name:'',
+              	                    		        	   type:'',
+              	                    		        	   img:'',
+              	                    		        	   order_number:'',
+              	                    		        	   update_date:'',
+              	                    		        	   answerList:[
+              	                    		        	               {
+              	                    		        	            	   answer_id:'',  
+              	                    		        	            	   name:'',  
+              	                    		        	            	   type:'',  
+              	                    		        	            	   img:'',  
+              	                    		        	            	   result:'',  
+              	                    		        	            	   update_date:''  
+              	                    		        	               }]
+              	                    		        	   
+              	                    		           }]                    		 
+              	                    	};
+              		        	  $scope.$apply();
               		        	  myUtils.myPrevToast("添加成功", null, "remove");
               		        	  return;
               		        	  }

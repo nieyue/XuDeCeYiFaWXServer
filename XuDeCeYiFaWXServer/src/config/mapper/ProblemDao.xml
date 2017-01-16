@@ -11,6 +11,7 @@
    		 name,
    		 type,
    		 img,
+   		 order_number,
    		 update_date,
    		 test_id
    		 )
@@ -18,6 +19,7 @@
     	 (#{name},
     	 #{type},
     	 #{img},
+    	 #{orderNumber},
     	 #{updateDate},
     	 #{testId}
     	 )
@@ -30,6 +32,7 @@
     	name=#{name},
     	type=#{type},
     	img=#{img},
+    	order_number=orderNumber,
     	update_date=#{updateDate},
     	test_id=#{testId}
     WHERE
@@ -48,6 +51,7 @@ SELECT
 	 	 name,
    		 type,
    		 img,
+   		 order_number,
    		 update_date,
    		 test_id
 FROM problem_tb 
@@ -60,6 +64,7 @@ WHERE problem_id=#{problemId}
 	 	 name,
    		 type,
    		 img,
+   		 order_number,
    		 update_date,
    		 test_id
 	FROM problem_tb
@@ -75,6 +80,7 @@ WHERE problem_id=#{problemId}
 	 	 name,
    		 type,
    		 img,
+   		 order_number,
    		 update_date,
    		 test_id
 	FROM problem_tb

@@ -1,22 +1,36 @@
 package com.nieyue.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.nieyue.bean.Answer;
+import com.nieyue.bean.Problem;
 import com.nieyue.bean.Test;
 import com.nieyue.exception.StateResult;
+import com.nieyue.service.AnswerService;
+import com.nieyue.service.ProblemService;
 import com.nieyue.service.TestService;
+import com.nieyue.util.DateUtil;
+import com.nieyue.util.FileUploadUtil;
+import com.nieyue.util.UploaderPath;
 
 
 /**
@@ -29,6 +43,10 @@ import com.nieyue.service.TestService;
 public class TestController {
 	@Resource
 	private TestService testService;
+	@Resource
+	private ProblemService problemService;
+	@Resource
+	private AnswerService answerService;
 	
 	/**
 	 * 测试分页浏览
@@ -80,6 +98,50 @@ public class TestController {
 		return StateResult.getSR(am);
 	}
 	/**
+	 * 后台测试增加
+	 * @return 
+	 */
+	@RequestMapping(value = "/add/all", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResult addALlTest(@RequestParam("testDTO") String testDTO, HttpSession session) {
+		boolean am=false;
+		Test test=new Test();
+		JSONObject jsonObject = JSONObject.fromObject(testDTO);
+		test.setTitle((String)jsonObject.get("title"));
+		test.setType((String)jsonObject.get("type"));
+		test.setLevel((Integer)jsonObject.get("level"));
+		test.setImg((String)jsonObject.get("img"));
+		am=testService.addTest(test);
+		
+		Object problemList = jsonObject.get("problemList");
+		JSONArray problemListArray = JSONArray.fromObject(problemList);
+		Iterator<JSONObject> pi = problemListArray.iterator();
+		 while (pi.hasNext()) {
+			 Problem problem=new Problem();
+			 JSONObject problemDTO = pi.next();
+             problem.setName(problemDTO.getString("name"));
+             problem.setType(problemDTO.getString("type"));
+             problem.setImg(problemDTO.getString("img"));
+             problem.setOrderNumber(problemDTO.getInt("order_number"));
+             problem.setTestId(test.getTestId());
+             am=problemService.addProblem(problem);
+             
+             Object answerList = problemDTO.get("answerList");
+     		JSONArray answerListArray = JSONArray.fromObject(answerList);
+     		Iterator<JSONObject> ai = answerListArray.iterator();
+     		 while (ai.hasNext()) {
+     			 Answer answer=new Answer();
+     			JSONObject answerDTO = ai.next();
+     			 answer.setName(answerDTO.getString("name"));
+     			 answer.setType(answerDTO.getString("type"));
+     			 answer.setImg(answerDTO.getString("img"));
+     			 answer.setResult(answerDTO.getString("result"));
+     			 answer.setProblemId(problem.getProblemId());
+     			 am=answerService.addAnswer(answer);
+     		 }
+         }
+		return StateResult.getSR(am);
+	}
+	/**
 	 *测试 删除
 	 * @return
 	 */
@@ -107,6 +169,23 @@ public class TestController {
 		test = testService.loadTest(testId);
 		return test;
 	}
-
+	/**
+	 * 图片增加
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value = "/img/add", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody String addAdvertiseImg(
+			@RequestParam("testFileUpload") MultipartFile file,
+			HttpSession session ) throws IOException  {
+		String imgUrl = null;
+		String imgdir=DateUtil.getImgDir();
+		try{
+			imgUrl = FileUploadUtil.FormDataMerImgFileUpload(file, session,UploaderPath.GetValueByKey(UploaderPath.ROOTPATH),UploaderPath.GetValueByKey(UploaderPath.IMG),imgdir);
+		}catch (IOException e) {
+			throw new IOException();
+		}
+		return imgUrl;
+	}
 	
 }

@@ -40,8 +40,8 @@ public class ProblemController {
 	public @ResponseBody List<Problem> browsePagingProblem(
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="problem_id") String orderName,
-			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
+			@RequestParam(value="orderName",required=false,defaultValue="order_number") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="asc") String orderWay,HttpSession session)  {
 			List<Problem> list = new ArrayList<Problem>();
 			list= problemService.browsePagingProblem(pageNum, pageSize, orderName, orderWay);
 			return list;

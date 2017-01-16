@@ -30,6 +30,10 @@ public class Problem implements Serializable{
 	 */
 	private String img;
 	/**
+	 * 问题序号
+	 */
+	private Integer orderNumber;
+	/**
 	 * 更新日期
 	 */
 	private Date updateDate;
@@ -43,12 +47,13 @@ public class Problem implements Serializable{
 	}
 
 	public Problem(Integer problemId, String name, String type, String img,
-			Date updateDate, Integer testId) {
+			Integer orderNumber,Date updateDate, Integer testId) {
 		super();
 		this.problemId = problemId;
 		this.name = name;
 		this.type = type;
 		this.img = img;
+		this.orderNumber = orderNumber;
 		this.updateDate = updateDate;
 		this.testId = testId;
 	}
@@ -99,6 +104,14 @@ public class Problem implements Serializable{
 
 	public void setTestId(Integer testId) {
 		this.testId = testId;
+	}
+
+	public Integer getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(Integer orderNumber) {
+		this.orderNumber = orderNumber;
 	}
 
 }
