@@ -26,4 +26,6 @@ public interface AnswerDao {
 	public List<Answer> browsePagingAnswer(@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 	/** 答案 全部信息 */
 	public List<Answer> browseAllAnswer(@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
+	/** 根据问题答案 全部信息 */
+	public List<Answer> browseAllAnswerByProblemId(@Param("problemId")Integer problemId,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 }

@@ -87,6 +87,21 @@ WHERE answer_id=#{answerId}
 	ORDER BY
 		${orderName}  ${orderWay}
 </select> 
+<!-- 根据问题查询全部答案-->
+<select id="browseAllAnswerByProblemId" resultType="Answer">  
+    SELECT
+	     answer_id,
+	 	 name,
+   		 type,
+   		 img,
+   		 result,
+   		 update_date,
+   		 problem_id
+	FROM answer_tb
+	WHERE problem_id=#{problemId}
+	ORDER BY
+		${orderName}  ${orderWay}
+</select> 
 
 <!-- 统计记录条数 -->
 <select id="countAll"  resultType="int">  

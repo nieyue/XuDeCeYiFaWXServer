@@ -67,4 +67,11 @@ public class ProblemServiceImpl implements ProblemService{
 			return l;
 	}
 
+	@Override
+	public List<Problem> browseAllProblemByTestId(Integer testId,
+			String orderName, String orderWay) {
+		List<Problem> l = problemDao.browseAllProblemByTestId(testId,orderName, orderWay);
+		return l;
+	}
+
 }

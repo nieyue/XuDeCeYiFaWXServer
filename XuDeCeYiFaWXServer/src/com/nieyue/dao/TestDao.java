@@ -22,6 +22,10 @@ public interface TestDao {
 	public Test loadTest(Integer testId);
 	/** 测试 总共数目 */	
 	public int countAll();
+	/** 根据类型测试 总共数目 */	
+	public int countAllByType(String type);
+	/** 根据类型测试 分页信息 */
+	public List<Test> browsePagingTestByType(@Param("type")String type,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 	/** 测试 分页信息 */
 	public List<Test> browsePagingTest(@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 	/** 测试 全部信息 */

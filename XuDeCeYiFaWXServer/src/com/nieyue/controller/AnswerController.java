@@ -61,6 +61,21 @@ public class AnswerController {
 		return list;
 	}
 	/**
+	 * 根据问题 答案全部查询
+	 * @param orderName 商品排序数据库字段
+	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/list/all/problem", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<Answer> browseAllAnswerByProblemId(
+			@RequestParam(value="problemId") Integer problemId,
+			@RequestParam(value="orderName",required=false,defaultValue="answer_id") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
+		List<Answer> list = new ArrayList<Answer>();
+		list= answerService.browseAllAnswerByProblemId(problemId, orderName, orderWay);
+		return list;
+	}
+	/**
 	 * 答案修改
 	 * @return
 	 */

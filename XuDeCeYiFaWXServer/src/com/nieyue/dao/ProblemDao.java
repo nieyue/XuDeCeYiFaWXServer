@@ -26,4 +26,6 @@ public interface ProblemDao {
 	public List<Problem> browsePagingProblem(@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 	/** 问题 全部信息 */
 	public List<Problem> browseAllProblem(@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
+	/** 根据测试获得问题 全部信息 */
+	public List<Problem> browseAllProblemByTestId(@Param("testId")Integer testId,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 }

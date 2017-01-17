@@ -23,5 +23,7 @@ public interface AnswerService {
 	/** 答案 分页信息 */
 	public List<Answer> browsePagingAnswer(int pageNum,int pageSize,String orderName,String orderWay);		
 	/** 答案 全部信息 */
-	public List<Answer> browseAllAnswer(String orderName,String orderWay) ;		
+	public List<Answer> browseAllAnswer(String orderName,String orderWay) ;	
+	/** 根据问题答案 全部信息 */
+	public List<Answer> browseAllAnswerByProblemId(Integer problemId,String orderName,String orderWay) ;		
 }

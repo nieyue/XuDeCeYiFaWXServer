@@ -32,7 +32,7 @@
     	name=#{name},
     	type=#{type},
     	img=#{img},
-    	order_number=orderNumber,
+    	order_number=#{orderNumber},
     	update_date=#{updateDate},
     	test_id=#{testId}
     WHERE
@@ -84,6 +84,21 @@ WHERE problem_id=#{problemId}
    		 update_date,
    		 test_id
 	FROM problem_tb
+	ORDER BY
+		${orderName}  ${orderWay}
+</select> 
+<!-- 根据测试获得查询全部问题-->
+<select id="browseAllProblemByTestId" resultType="Problem">  
+    SELECT
+	     problem_id,
+	 	 name,
+   		 type,
+   		 img,
+   		 order_number,
+   		 update_date,
+   		 test_id
+	FROM problem_tb
+	WHERE test_id=#{testId}
 	ORDER BY
 		${orderName}  ${orderWay}
 </select> 

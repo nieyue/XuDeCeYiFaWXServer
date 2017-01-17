@@ -67,6 +67,22 @@ WHERE test_id=#{testId}
 	LIMIT
 		#{pageNum},#{pageSize}
 </select> 
+<!-- 根据类别分页查询测试-->
+<select id="browsePagingTestByType" resultType="Test">  
+    SELECT
+	     test_id,
+	 	 title,
+   		 type,
+   		 level,
+   		 img,
+   		 update_date
+	FROM test_tb
+	WHERE type=#{type}
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageNum},#{pageSize}
+</select> 
 <!-- 查询全部测试-->
 <select id="browseAllTest" resultType="Test">  
     SELECT
@@ -86,6 +102,13 @@ WHERE test_id=#{testId}
 	SELECT
 	 	count(test_id)
 	FROM test_tb
+</select>   
+<!-- 根据类别统计记录条数 -->
+<select id="countAllByCount"  resultType="int">  
+	SELECT
+	 	count(test_id)
+	FROM test_tb
+	WHERE type=#{type}
 </select>   
    
  

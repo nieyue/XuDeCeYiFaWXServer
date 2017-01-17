@@ -23,5 +23,7 @@ public interface ProblemService {
 	/** 问题 分页信息 */
 	public List<Problem> browsePagingProblem(int pageNum,int pageSize,String orderName,String orderWay);		
 	/** 问题 全部信息 */
-	public List<Problem> browseAllProblem(String orderName,String orderWay) ;		
+	public List<Problem> browseAllProblem(String orderName,String orderWay) ;
+	/** 根据测试获得问题 全部信息 */
+	public List<Problem> browseAllProblemByTestId(Integer testId,String orderName,String orderWay) ;		
 }

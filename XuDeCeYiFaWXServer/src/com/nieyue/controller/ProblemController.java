@@ -61,6 +61,21 @@ public class ProblemController {
 		return list;
 	}
 	/**
+	 * 根据测试获得问题全部查询
+	 * @param orderName 商品排序数据库字段
+	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/list/all/test", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<Problem> browseAllProblemByTestId(
+			@RequestParam(value="testId") Integer testId,
+			@RequestParam(value="orderName",required=false,defaultValue="problem_id") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
+		List<Problem> list = new ArrayList<Problem>();
+		list= problemService.browseAllProblemByTestId(testId,orderName, orderWay);
+		return list;
+	}
+	/**
 	 * 问题修改
 	 * @return
 	 */

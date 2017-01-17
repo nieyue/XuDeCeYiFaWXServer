@@ -67,4 +67,11 @@ public class AnswerServiceImpl implements AnswerService{
 			return l;
 	}
 
+	@Override
+	public List<Answer> browseAllAnswerByProblemId(Integer problemId,
+			String orderName, String orderWay) {
+		List<Answer> l = answerDao.browseAllAnswerByProblemId(problemId,orderName, orderWay);
+		return l;
+	}
+
 }

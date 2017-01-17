@@ -67,4 +67,23 @@ public class TestServiceImpl implements TestService{
 			return l;
 	}
 
+	@Override
+	public int countAllByType(String type) {
+		int c = testDao.countAllByType(type);
+		return c;
+	}
+
+	@Override
+	public List<Test> browsePagingTestByType(String type, int pageNum,
+			int pageSize, String orderName, String orderWay) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<Test> l = testDao.browsePagingTestByType(type,pageNum-1, pageSize, orderName, orderWay);
+		return l;
+	}
+
 }

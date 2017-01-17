@@ -25,6 +25,26 @@ public class DateUtil {
 	return nowTime;
 	}
 	/**
+	 * 格式化时间yyyy-MM-dd HH:mm:ss
+	 * @return
+	 */
+	public static String getFormatDate(Date date){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置显示格式
+		String nowTime="";
+		nowTime= df.format(date);//用DateFormat的format()方法在dt中获取并以yyyy/MM/dd HH:mm:ss格式显示
+		return nowTime;
+	}
+	/**
+	 * 格式化时间yyyy-MM-dd HH:mm:ss
+	 * @return
+	 */
+	public static String getFormatDate(Date date,String format){
+		DateFormat df = new SimpleDateFormat(format);//设置显示格式
+		String nowTime="";
+		nowTime= df.format(date);//用DateFormat的format()方法在dt中获取并以yyyy/MM/dd HH:mm:ss格式显示
+		return nowTime;
+	}
+	/**
 	 * 格式化时间yyyy-MM-dd
 	 * @return
 	 */
