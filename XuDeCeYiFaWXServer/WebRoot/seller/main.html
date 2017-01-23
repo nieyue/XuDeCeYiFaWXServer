@@ -110,6 +110,29 @@
                    			console.log(answer)
 							}
                    		}
+                   	//上传测试图片
+                 		$("#updateTestFileUpload").change(function(){
+                    		//console.log($("#testFileUpload"))
+                 		//function testFileUpload(){
+                 			myUtils.fileUpload(
+                 				    {inputfile:$("#updateTestFileUpload"),
+                 				    ajaxObj:{
+                 				        formData:[
+                 				            {key:"testFileUpload",value:$("#updateTestFileUpload").get(0).files[0]}
+                 				            ],
+                 				        url:"/test/img/add",
+                 				        success:(data)=>{
+                 				            if(data){
+                 				            myUtils.myLoadingToast("上传成功",null);
+                 				            myUtils.myPrevToast("上传成功",null,"remove");
+                 				           $scope.test.img=data;
+                 				           $scope.$apply();
+                 				            }
+                 				        }
+                 				    }
+                 				}
+                 				);
+                 		});
                    		//更新
                 		$scope.updateTestForm=function(){
                 			myUtils.myPrevToast("添加中", function(){
@@ -179,7 +202,7 @@
                 			orderName:"update_date",
                 			orderWay:"desc"
                 			});	
-                   		//全部新闻列表
+                   		//全部测试列表
                    		$scope.allTest=function(){
                    			initData({
                     			pageNum:1,
