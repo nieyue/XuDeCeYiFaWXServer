@@ -175,8 +175,10 @@
                 		          url : urllist,  
                 		          async : false,  
                 		          success : function(data){
+                		        	  $scope.noMore=false;
                 		        	  if(data==''){
                 		        		  $("#addMore").hide();
+                		        		  $scope.noMore=true;
                 		        		  return ;
                 		        	  }else{
                 		        		  $("#addMore").show();
@@ -194,20 +196,31 @@
                 		          }  
                 		          });  
                 		}
+                   		$scope.testList=[];
+                		//初始化分页的开始的数目
+                		$scope.pageNum=1;
+                		//初始化分页的每页数
+                		$scope.perPageSize=10;
+                		//初始化分类型,默认没有类型
+                		$scope.perType=null;
+                		//初始化没有更多了
+                		$scope.noMore=false;
                    		//初始化
                 		initData({
-                			pageNum:1,
-                			pageSize:10,
-                			//type:"首页",
+                			pageNum:$scope.pageNum,
+                			pageSize:$scope.perPageSize,
+                			type:$scope.perType,
                 			orderName:"update_date",
                 			orderWay:"desc"
                 			});	
                    		//全部测试列表
                    		$scope.allTest=function(){
+                   			$scope.perType=null;
+                   			$scope.pageNum=1;
                    			initData({
-                    			pageNum:1,
-                    			pageSize:10,
-                    			//type:"首页",
+                    			pageNum:$scope.pageNum,
+                    			pageSize:$scope.perPageSize,
+                    			type:$scope.perType,
                     			orderName:"update_date",
                     			orderWay:"desc"
                     			});	
@@ -216,10 +229,12 @@
                    	
                    		//介绍
                    		$scope.listType=function(typeName){
+                   			$scope.perType=typeName;
+                   			$scope.pageNum=1;
                    			initData({
-                    			pageNum:1,
-                    			pageSize:10,
-                    			type:typeName,
+                    			pageNum:$scope.pageNum,
+                    			pageSize:$scope.perPageSize,
+                    			type:$scope.perType,
                     			orderName:"update_date",
                     			orderWay:"desc"
                     			});	
@@ -229,13 +244,14 @@
                    		//获取更多
                 		$scope.addMore=function(){
                 			$("#addMore").children().text("正在加载中...");
-                			var pageNum=$(".listGroup").size()+1;
-                			var type=$(".nav-active div").text().trim();
-                			
+                			//var pageNum=$(".listGroup").size()+1;
+                			//var type=$(".nav-active div").text().trim();
+                			//console.log($scope.perType)
+                			$scope.pageNum=$scope.pageNum+$scope.perPageSize;
                 			initData({
-                    			pageNum:pageNum,
-                    			pageSize:10,
-                    			//type:type,
+                    			pageNum:$scope.pageNum,
+                    			pageSize:$scope.perPageSize,
+                    			type:$scope.perType,
                     			orderName:"update_date",
                     			orderWay:"desc"
                     			});
@@ -306,7 +322,7 @@
                     	//问题数目改变
                     	$scope.problemListChange=function(problemNumber){
                     		$scope.test.problemList=[];
-                    		console.log(problemNumber)
+                    		//console.log(problemNumber)
                     		for (var i = 0; i < problemNumber; i++) {
                     			$scope.test.problemList.push({
                     			   problem_id:'',
@@ -333,10 +349,10 @@
                     			//选择得当前问题
                     			if($scope.test.problemList[i]==problem){
                     			$scope.test.problemList[i].answerList=[];
-                    			console.log(problem)
-                    			console.log(answerNumber)
+                    			//console.log(problem)
+                    			//console.log(answerNumber)
                     			for (var j = 0; j < answerNumber; j++) {
-                    			console.log($scope.test.problemList[i].answerList)
+                    			//console.log($scope.test.problemList[i].answerList)
                     			$scope.test.problemList[i].answerList.push({
                     				   answer_id:'',  
 		        	            	   name:'',  
